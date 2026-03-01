@@ -2,25 +2,27 @@
 async function upload() {
   const file = document.getElementById('file').files[0];
   const token = new URLSearchParams(window.location.search).get('token');
-  if (!file) return alert("Selecciona una imagen");
-  if (!token) return alert("Falta ?token= en la URL");
-
   const status = document.getElementById("status");
-  status.innerText = "Preparando subida...";
 
-  // 1) pedir URL firmada a tu API
-  const r = await fetch('/api/upload-url?token=' + encodeURIComponent(token), {
-    method: 'POST'
+  if (!file) return alert("Selecciona imagen");
+  if (!token) return alert("Falta token");
+
+  status.innerText = "Generando URL...";
+
+  const r = await fetch('/api/upload-url?token=' + token, {
+    method: "POST"
   });
+
   if (!r.ok) {
-    status.innerText = "Error: " + await r.text();
+    status.innerText = await r.text();
     return;
   }
+
   const { url } = await r.json();
 
-  // 2) subir directo al Blob (PUT)
-  status.innerText = "Subiendo al storage...";
-  const putRes = await fetch(url, {
+  status.innerText = "Subiendo...";
+
+  const uploadRes = await fetch(url, {
     method: "PUT",
     headers: {
       "Content-Type": file.type || "image/jpeg"
@@ -28,8 +30,8 @@ async function upload() {
     body: file
   });
 
-  if (!putRes.ok) {
-    status.innerText = "Error subiendo: " + (await putRes.text());
+  if (!uploadRes.ok) {
+    status.innerText = "Error al subir";
     return;
   }
 
