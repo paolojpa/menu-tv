@@ -11,8 +11,7 @@ export default async function handler(req, res) {
     return res.status(405).send("Método no permitido");
   }
 
-  // pathname fijo (siempre igual)
-  const url = await createUploadUrl({
+  const { url } = await createUploadUrl({
     pathname: "menu/menu.jpg",
     access: "public",
     contentType: "image/jpeg"
