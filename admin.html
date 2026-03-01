@@ -1,18 +1,3 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>Admin - Subir Menú</title>
-</head>
-<body style="font-family:Arial;background:#111;color:white;display:flex;align-items:center;justify-content:center;height:100vh">
-
-<div style="background:#222;padding:30px;border-radius:10px;width:400px">
-  <h2>Subir Menú del Día</h2>
-  <input type="file" id="file" accept="image/*"><br><br>
-  <button onclick="upload()">Subir</button>
-  <div id="status" style="margin-top:15px"></div>
-</div>
-
 <script>
 async function upload() {
   const file = document.getElementById('file').files[0];
@@ -20,24 +5,34 @@ async function upload() {
   if (!file) return alert("Selecciona una imagen");
   if (!token) return alert("Falta ?token= en la URL");
 
-  const fd = new FormData();
-  fd.append("file", file);
+  const status = document.getElementById("status");
+  status.innerText = "Preparando subida...";
 
-  document.getElementById("status").innerText = "Subiendo...";
+  // 1) pedir URL firmada a tu API
+  const r = await fetch('/api/upload-url?token=' + encodeURIComponent(token), {
+    method: 'POST'
+  });
+  if (!r.ok) {
+    status.innerText = "Error: " + await r.text();
+    return;
+  }
+  const { url } = await r.json();
 
-  const res = await fetch('/api/upload?token=' + token, {
-    method: 'POST',
-    body: fd
+  // 2) subir directo al Blob (PUT)
+  status.innerText = "Subiendo al storage...";
+  const putRes = await fetch(url, {
+    method: "PUT",
+    headers: {
+      "Content-Type": file.type || "image/jpeg"
+    },
+    body: file
   });
 
-  if (!res.ok) {
-    document.getElementById("status").innerText = "Error: " + await res.text();
+  if (!putRes.ok) {
+    status.innerText = "Error subiendo: " + (await putRes.text());
     return;
   }
 
-  document.getElementById("status").innerText = "Listo ✅ Menú actualizado";
+  status.innerText = "Listo ✅ Menú actualizado";
 }
 </script>
-
-</body>
-</html>
