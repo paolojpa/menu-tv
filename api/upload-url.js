@@ -1,7 +1,7 @@
 import { createUploadUrl } from "@vercel/blob";
 
 export default async function handler(req, res) {
-  const { token } = req.query;
+  const token = req.query.token;
 
   if (!token || token !== process.env.ADMIN_TOKEN) {
     return res.status(401).send("No autorizado");
@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   const { url } = await createUploadUrl({
     pathname: "menu/menu.jpg",
     access: "public",
-    addRandomSuffix: false   // 👈 ESTA LÍNEA ES LA CLAVE
+    addRandomSuffix: false,
   });
 
   res.setHeader("Cache-Control", "no-store");
