@@ -18,7 +18,7 @@
       background:#111;
     }
 
-    /* Layout general: header arriba + imagen abajo */
+    /* Layout general: header arriba + slider abajo */
     .page{
       height:100vh;
       display:flex;
@@ -122,42 +122,120 @@
       opacity:.9;
     }
 
-    /* Zona de imagen debajo */
+    /* Zona inferior (slides) */
     .imgArea{
       flex:1;
       background:#111;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 18px;
+      padding: 30px 40px 40px;
       overflow:hidden;
     }
 
-    .imgFrame{
+    .slider{
       width: 100%;
       height: 100%;
-      max-width: 1400px; /* ajustable */
-      border-radius: 18px;
+      max-width: 1400px;
+      position:relative;
+      border-radius: 28px;
       overflow:hidden;
-      background: rgba(255,255,255,.04);
-      box-shadow: 0 30px 90px rgba(0,0,0,.6);
-      border: 1px solid rgba(255,255,255,.08);
+      background:#000;
+      box-shadow:
+        0 40px 120px rgba(0,0,0,.7),
+        0 0 0 1px rgba(255,255,255,.06);
+    }
+
+    .slide{
+      position:absolute;
+      inset:0;
+      opacity:0;
+      transition: opacity .8s ease;
       display:flex;
       align-items:center;
       justify-content:center;
     }
 
+    .slide.active{
+      opacity:1;
+      z-index:2;
+    }
+
+    /* Slide 1 (imagen dinámica) */
     #menuImg{
       width:100%;
       height:100%;
-      object-fit: cover; /* cover si quieres que llene recortando */
+      object-fit: cover;
+      object-position: center center;
       display:block;
+    }
+
+    /* Slides de texto */
+    .promo{
+      background: linear-gradient(135deg, #0e0e0e, #1c1c1c);
+      color:#fff;
+      padding: 48px;
+      box-sizing:border-box;
+      text-align:center;
+    }
+
+    .promoBox{
+      max-width: 900px;
+      width: 100%;
+    }
+
+    .promoTitle{
+      font-weight:900;
+      font-size: clamp(36px, 4vw, 72px);
+      margin: 0 0 16px;
+      letter-spacing:.5px;
+      text-transform: uppercase;
+    }
+
+    .promoText{
+      font-size: clamp(22px, 2.2vw, 40px);
+      opacity:.9;
+      margin: 0 0 22px;
+    }
+
+    .promoPrice{
+      display:inline-block;
+      background:#fff;
+      color:#000;
+      font-weight:900;
+      font-size: clamp(34px, 4vw, 84px);
+      padding: 14px 22px;
+      border-radius: 16px;
+      letter-spacing:1px;
+    }
+
+    .info{
+      background: radial-gradient(900px 600px at 30% 10%, #1f1f1f, #0b0b0b);
+      color:#fff;
+      padding: 48px;
+      box-sizing:border-box;
+      text-align:center;
+    }
+
+    .infoTitle{
+      font-weight:900;
+      font-size: clamp(34px, 3.6vw, 64px);
+      margin: 0 0 14px;
+      text-transform: uppercase;
+    }
+
+    .infoLine{
+      font-size: clamp(22px, 2.2vw, 40px);
+      opacity:.9;
+      margin: 6px 0;
     }
 
     /* Responsive: si es angosto, apila planes */
     @media (max-width: 900px){
       .logoBox{ display:none; }
       .plans{ grid-template-columns: 1fr; }
+      .imgArea{ padding: 18px; }
+      .slider{ max-width: 100%; border-radius: 18px; }
     }
   </style>
 </head>
@@ -201,10 +279,34 @@
       </div>
     </header>
 
-    <!-- IMAGEN DE MENU DEBAJO -->
+    <!-- SLIDES DEBAJO -->
     <main class="imgArea">
-      <div class="imgFrame">
-        <img id="menuImg" alt="Menú" />
+      <div class="slider">
+
+        <!-- Slide 1: Imagen menú (dinámica) -->
+        <div class="slide active">
+          <img id="menuImg" alt="Menú" />
+        </div>
+
+        <!-- Slide 2: Promoción -->
+        <div class="slide promo">
+          <div class="promoBox">
+            <h2 class="promoTitle">Promoción del Día</h2>
+            <p class="promoText">Empanada + Bebida</p>
+            <div class="promoPrice">$2.990</div>
+          </div>
+        </div>
+
+        <!-- Slide 3: Información -->
+        <div class="slide info">
+          <div>
+            <h2 class="infoTitle">Horario de Atención</h2>
+            <div class="infoLine">Lunes a Viernes</div>
+            <div class="infoLine">12:00 a 16:00 hrs</div>
+            <div class="infoLine" style="margin-top:18px;opacity:.75;">Gracias por preferirnos</div>
+          </div>
+        </div>
+
       </div>
     </main>
 
@@ -213,6 +315,20 @@
 <script>
 let lastV = null;
 
+// --- Slider ---
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide');
+
+function changeSlide(){
+  slides[currentSlide].classList.remove('active');
+  currentSlide = (currentSlide + 1) % slides.length;
+  slides[currentSlide].classList.add('active');
+}
+
+// Cambiar slide cada 10s (ajustable)
+setInterval(changeSlide, 10000);
+
+// --- Imagen dinámica (solo actualiza src; la slide 1 ya la muestra) ---
 async function refresh() {
   const r = await fetch('/api/version', { cache: 'no-store' });
   const data = await r.json();
