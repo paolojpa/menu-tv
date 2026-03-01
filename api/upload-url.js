@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   const { url } = await createUploadUrl({
     pathname: "menu/menu.jpg",
     access: "public",
-    contentType: "image/jpeg"
+    addRandomSuffix: false   // 👈 ESTA LÍNEA ES LA CLAVE
   });
 
   res.setHeader("Cache-Control", "no-store");
