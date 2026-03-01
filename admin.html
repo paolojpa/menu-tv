@@ -32,43 +32,43 @@
     </div>
   </div>
 
-  <script>
-    async function upload(){
-      const file = document.getElementById('file').files[0];
-      const token = new URLSearchParams(location.search).get('token');
-      const status = document.getElementById('status');
-      const btn = document.getElementById('btn');
+<script>
+  async function upload(){
+    const file = document.getElementById('file').files[0];
+    const token = new URLSearchParams(location.search).get('token');
+    const status = document.getElementById('status');
+    const btn = document.getElementById('btn');
 
-      if(!token){ status.textContent = 'Falta token en la URL: /admin.html?token=...'; return; }
-      if(!file){ status.textContent = 'Selecciona una imagen.'; return; }
+    if(!token){ status.textContent = 'Falta token en la URL: /admin.html?token=...'; return; }
+    if(!file){ status.textContent = 'Selecciona una imagen.'; return; }
 
-      btn.disabled = true;
-      status.textContent = 'Generando URL de subida...';
+    btn.disabled = true;
+    status.textContent = 'Subiendo imagen...';
 
-      // 1) pedir URL firmada
-      const r = await fetch('/api/upload-url?token=' + encodeURIComponent(token), { method:'POST' });
-      const txt = await r.text();
-      if(!r.ok){ status.textContent = 'Error: ' + txt; btn.disabled = false; return; }
+    try {
+      const fd = new FormData();
+      fd.append('file', file); // tu API busca files.file/files.image :contentReference[oaicite:1]{index=1}
 
-      const { url } = JSON.parse(txt);
-
-      // 2) subir directo al blob
-      status.textContent = 'Subiendo imagen...';
-      const putRes = await fetch(url, {
-        method: 'PUT',
-        headers: { 'Content-Type': file.type || 'image/jpeg' },
-        body: file
+      const r = await fetch('/api/upload?token=' + encodeURIComponent(token), {
+        method: 'POST',
+        body: fd
       });
 
-      if(!putRes.ok){
-        status.textContent = 'Error subiendo: ' + await putRes.text();
+      const data = await r.json().catch(async () => ({ error: await r.text() }));
+      if(!r.ok){
+        status.textContent = 'Error: ' + (data.error || JSON.stringify(data));
         btn.disabled = false;
         return;
       }
 
+      // data.url = URL final del blob, data.v = timestamp :contentReference[oaicite:2]{index=2}
       status.textContent = 'Listo ✅ Menú actualizado.';
+    } catch (e){
+      status.textContent = 'Error: ' + (e?.message || e);
+    } finally {
       btn.disabled = false;
     }
-  </script>
+  }
+</script>
 </body>
 </html>
