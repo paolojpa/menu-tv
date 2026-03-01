@@ -1,4 +1,10 @@
-import { put } from '@vercel/blob';
+import { put } from "@vercel/blob";
+import formidable from "formidable";
+import fs from "fs";
+
+export const config = {
+  api: { bodyParser: false },
+};
 
 export default async function handler(req, res) {
   const { token } = req.query;
@@ -7,22 +13,31 @@ export default async function handler(req, res) {
     return res.status(401).send("No autorizado");
   }
 
-  if (req.method !== 'POST') {
+  if (req.method !== "POST") {
     return res.status(405).send("Método no permitido");
   }
 
-  const chunks = [];
-  for await (const chunk of req) {
-    chunks.push(chunk);
-  }
+  const form = formidable({ multiples: false });
 
-  const buffer = Buffer.concat(chunks);
+  form.parse(req, async (err, fields, files) => {
+    try {
+      if (err) return res.status(400).send(err.message);
 
-  const blob = await put("menu/menu.jpg", buffer, {
-    access: "public",
-    overwrite: true,
-    cacheControlMaxAge: 60
+      const file = Array.isArray(files.file) ? files.file[0] : files.file;
+      if (!file) return res.status(400).send("Archivo no encontrado");
+
+      const buffer = fs.readFileSync(file.filepath);
+
+      await put("menu/menu.jpg", buffer, {
+        access: "public",
+        overwrite: true,
+        contentType: file.mimetype || "image/jpeg",
+        cacheControlMaxAge: 60,
+      });
+
+      return res.status(200).json({ ok: true });
+    } catch (e) {
+      return res.status(500).send(e.message);
+    }
   });
-
-  return res.status(200).json({ ok: true, url: blob.url });
 }
