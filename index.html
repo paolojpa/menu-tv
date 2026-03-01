@@ -6,145 +6,208 @@
   <title>Menú del Día</title>
   <style>
     :root{
-      --bg:#0b0b0b;
-      --panel:#141414;
-      --panel2:#101010;
-      --border:#2a2a2a;
-      --text:#ffffff;
-      --muted:rgba(255,255,255,.75);
+      --yellow:#f6d86a;
+      --black:#0b0b0b;
+      --white:#fff;
     }
 
-    html, body{
+    html,body{
       height:100%;
       margin:0;
-      background: radial-gradient(1200px 800px at 20% 10%, #1a1a1a, var(--bg));
-      color:var(--text);
       font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial;
+      background:#111;
     }
 
-    .layout{
+    /* Layout general: header arriba + imagen abajo */
+    .page{
       height:100vh;
-      display:grid;
-      grid-template-columns: 40% 60%;
-    }
-
-    .left{
-      padding:48px;
       display:flex;
       flex-direction:column;
-      gap:24px;
     }
 
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      border:1px solid var(--border);
-      border-radius:24px;
-      padding:28px 28px;
-      box-shadow: 0 30px 80px rgba(0,0,0,.55);
-      backdrop-filter: blur(8px);
+    /* Header estilo afiche */
+    .hero{
+      background: var(--yellow);
+      color:#111;
+      padding: 26px 34px 18px;
+      position:relative;
+      border-bottom: 10px solid rgba(0,0,0,.06);
+    }
+
+    .heroTop{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .logoBox{
+      width:190px;
+      height:70px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      font-weight:700;
+      opacity:.85;
+    }
+
+    .logoBox.right{
+      justify-content:flex-end;
+    }
+
+    .titleWrap{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     .title{
-      margin:0;
-      font-size: clamp(40px, 4vw, 64px);
-      letter-spacing: .6px;
+      display:inline-block;
+      background:#000;
+      color:#fff;
+      padding: 14px 26px;
+      font-weight:900;
+      letter-spacing:1px;
+      font-size: clamp(34px, 4vw, 72px);
       text-transform: uppercase;
+      border-radius: 6px;
+    }
+
+    /* 3 columnas de combos/precios */
+    .plans{
+      margin-top: 18px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      align-items:start;
+    }
+
+    .plan{
+      text-align:center;
+      padding: 10px 8px;
+    }
+
+    .price{
+      font-weight:900;
+      font-size: clamp(28px, 2.6vw, 54px);
+      margin-bottom: 10px;
+    }
+
+    .badge{
+      display:inline-block;
+      background:#000;
+      color:#fff;
+      padding: 10px 16px;
+      font-weight:900;
+      font-size: clamp(18px, 1.8vw, 36px);
+      text-transform: uppercase;
+      border-radius: 6px;
+    }
+
+    .plus{
+      margin-top:10px;
+      font-weight:900;
+      font-size: clamp(18px, 1.8vw, 34px);
       line-height:1.05;
+      text-transform: uppercase;
     }
 
-    .prices{
-      margin-top:18px;
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      font-size: clamp(22px, 2vw, 30px);
-      color:var(--muted);
+    .foot{
+      margin-top: 14px;
+      text-align:center;
+      font-size: clamp(12px, 1.2vw, 20px);
+      letter-spacing: .5px;
+      padding-bottom: 6px;
+      opacity:.9;
     }
 
-    .row{
-      display:flex;
-      justify-content:space-between;
-      gap:18px;
-      padding:10px 0;
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .row:last-child{ border-bottom:none; }
-
-    .label{ color: rgba(255,255,255,.78); }
-    .value{ color: #fff; font-weight:700; }
-
-    .note{
-      margin-top:auto;
-      color: rgba(255,255,255,.55);
-      font-size: 14px;
-    }
-
-    .right{
+    /* Zona de imagen debajo */
+    .imgArea{
+      flex:1;
+      background:#111;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:26px;
-    }
-
-    .imgWrap{
-      width:100%;
-      height:100%;
-      background: rgba(255,255,255,.03);
-      border:1px solid var(--border);
-      border-radius:26px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      box-shadow: 0 30px 80px rgba(0,0,0,.55);
+      padding: 18px;
       overflow:hidden;
+    }
+
+    .imgFrame{
+      width: 100%;
+      height: 100%;
+      max-width: 1400px; /* ajustable */
+      border-radius: 18px;
+      overflow:hidden;
+      background: rgba(255,255,255,.04);
+      box-shadow: 0 30px 90px rgba(0,0,0,.6);
+      border: 1px solid rgba(255,255,255,.08);
+      display:flex;
+      align-items:center;
+      justify-content:center;
     }
 
     #menuImg{
       width:100%;
       height:100%;
-      object-fit: contain;
+      object-fit: contain; /* cover si quieres que llene recortando */
       display:block;
     }
 
-    /* Para pantallas verticales (TV girada / móvil) */
+    /* Responsive: si es angosto, apila planes */
     @media (max-width: 900px){
-      .layout{ grid-template-columns: 1fr; }
-      .left{ padding:24px; }
-      .right{ padding:18px; height:60vh; }
+      .logoBox{ display:none; }
+      .plans{ grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
-  <div class="layout">
-    <div class="left">
-      <div class="card">
-        <h1 class="title">Menú del Día</h1>
+  <div class="page">
 
-        <div class="prices">
-          <div class="row">
-            <div class="label">Almuerzo Ejecutivo</div>
-            <div class="value">$6.990</div>
-          </div>
-          <div class="row">
-            <div class="label">Colación</div>
-            <div class="value">$4.990</div>
-          </div>
-          <div class="row">
-            <div class="label">Agregado</div>
-            <div class="value">$1.500</div>
-          </div>
+    <!-- HEADER (estilo afiche) -->
+    <header class="hero">
+      <div class="heroTop">
+        <div class="logoBox">LOGO IZQ</div>
+
+        <div class="titleWrap">
+          <div class="title">MENÚ DEL DÍA</div>
+        </div>
+
+        <div class="logoBox right">LOGO DER</div>
+      </div>
+
+      <div class="plans">
+        <div class="plan">
+          <div class="price">$4.100</div>
+          <div class="badge">Plato de Fondo</div>
+        </div>
+
+        <div class="plan">
+          <div class="price">$4.600</div>
+          <div class="badge">Plato de Fondo</div>
+          <div class="plus">+<br>Postre o<br>Ensalada</div>
+        </div>
+
+        <div class="plan">
+          <div class="price">$5.100</div>
+          <div class="badge">Plato de Fondo</div>
+          <div class="plus">+<br>Postre y<br>Ensalada</div>
         </div>
       </div>
 
-      <div class="note">Casino Antumapu - Facultad de Cs. Agronómicas. Universidad de Chile.</div>
-    </div>
+      <div class="foot">
+        Todos los menús incluyen pan, sopa y jugo o agua • Menús válidos hasta agotar stock.
+      </div>
+    </header>
 
-    <div class="right">
-      <div class="imgWrap">
+    <!-- IMAGEN DE MENU DEBAJO -->
+    <main class="imgArea">
+      <div class="imgFrame">
         <img id="menuImg" alt="Menú" />
       </div>
-    </div>
+    </main>
+
   </div>
 
 <script>
