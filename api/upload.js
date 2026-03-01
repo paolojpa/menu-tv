@@ -21,24 +21,23 @@ export default async function handler(req, res) {
 
   form.parse(req, async (err, fields, files) => {
     try {
-      if (err) return res.status(400).send("Error leyendo archivo: " + err.message);
+      if (err) return res.status(400).send(err.message);
 
-      const f = files.file;
-      const file = Array.isArray(f) ? f[0] : f;
-      if (!file) return res.status(400).send("Falta campo 'file'");
+      const file = Array.isArray(files.file) ? files.file[0] : files.file;
+      if (!file) return res.status(400).send("Archivo no encontrado");
 
       const buffer = fs.readFileSync(file.filepath);
 
-      const blob = await put("menu/menu.jpg", buffer, {
+      await put("menu/menu.jpg", buffer, {
         access: "public",
         overwrite: true,
         contentType: file.mimetype || "image/jpeg",
-        cacheControlMaxAge: 60,
+        cacheControlMaxAge: 60
       });
 
-      return res.status(200).json({ ok: true, url: blob.url });
+      return res.status(200).json({ ok: true });
     } catch (e) {
-      return res.status(500).send(e?.message || "Error interno");
+      return res.status(500).send(e.message);
     }
   });
 }
