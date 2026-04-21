@@ -3,15 +3,17 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Menú Digital</title>
+  <title>Menú del Día</title>
   <style>
     :root{
       --yellow:#f6d86a;
       --black:#0b0b0b;
-      --white:#fff;
+      --white:#ffffff;
     }
 
-    *{ box-sizing:border-box; }
+    *{
+      box-sizing:border-box;
+    }
 
     html, body{
       margin:0;
@@ -21,27 +23,29 @@
     }
 
     .page{
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
-      background:var(--yellow);
+      height:100vh;
+      display:grid;
+      grid-template-rows: auto 1fr;
+      overflow:hidden;
     }
 
     .hero{
-      padding:18px 28px 12px;
-      border-bottom:6px solid rgba(0,0,0,.08);
+      background: var(--yellow);
+      color:#111;
+      padding: 14px 24px 10px;
+      border-bottom: 6px solid rgba(0,0,0,.08);
     }
 
     .heroTop{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:20px;
+      gap:18px;
     }
 
     .logoBox{
-      width:160px;
-      height:100px;
+      width:130px;
+      height:80px;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -55,113 +59,144 @@
       display:block;
     }
 
+    .logoLeft .logoImg{
+      transform:scale(1.02);
+    }
+
+    .logoRight .logoImg{
+      transform:scale(.95);
+    }
+
     .titleWrap{
       flex:1;
       display:flex;
       justify-content:center;
+      align-items:center;
     }
 
     .title{
       background:#000;
       color:#fff;
-      padding:12px 28px;
+      padding:10px 24px;
       border-radius:10px;
       font-weight:900;
-      font-size: clamp(30px, 4vw, 68px);
+      font-size: clamp(28px, 3.2vw, 60px);
       text-transform:uppercase;
       line-height:1;
-    }
-
-    .plans{
-      margin-top:10px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
       text-align:center;
     }
 
+    .plans{
+      margin-top:8px;
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:10px;
+      align-items:start;
+    }
+
     .plan{
-      padding:8px;
+      padding:4px 8px;
+      text-align:center;
+      min-height:160px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:flex-start;
     }
 
     .price{
       font-weight:900;
-      font-size: clamp(28px, 2.7vw, 54px);
-      margin-bottom:10px;
+      font-size: clamp(24px, 2.4vw, 46px);
+      margin-bottom:8px;
+      line-height:1;
     }
 
     .badge{
       display:inline-block;
       background:#000;
       color:#fff;
-      padding:10px 18px;
+      padding:10px 16px;
       border-radius:10px;
       font-weight:900;
-      font-size: clamp(18px, 1.7vw, 30px);
+      font-size: clamp(16px, 1.4vw, 28px);
       text-transform:uppercase;
+      line-height:1.05;
     }
 
     .plus{
       margin-top:14px;
       font-weight:900;
-      font-size: clamp(20px, 1.8vw, 30px);
-      line-height:1.05;
+      font-size: clamp(18px, 1.5vw, 28px);
+      line-height:1.02;
       text-transform:uppercase;
     }
 
     .foot{
-      margin-top:10px;
+      margin-top:6px;
       text-align:center;
-      font-size: clamp(11px, 1vw, 18px);
-      opacity:.9;
+      font-size: clamp(11px, .95vw, 16px);
+      opacity:.92;
+      line-height:1.2;
     }
 
     .showcaseWrap{
-      flex:1;
-      padding:22px 34px 30px;
+      min-height:0;
       background:#111;
+      padding: 16px 24px 20px;
+      overflow:hidden;
     }
 
     .showcase{
       width:100%;
       height:100%;
-      min-height:360px;
-      background:#000;
+      background:#050505;
       border-radius:24px;
       overflow:hidden;
       display:grid;
       grid-template-columns: 50% 50%;
       box-shadow:
-        0 25px 70px rgba(0,0,0,.45),
+        0 18px 50px rgba(0,0,0,.35),
         0 0 0 1px rgba(255,255,255,.05);
     }
 
     .mediaPanel{
       position:relative;
+      min-width:0;
+      min-height:0;
+      overflow:hidden;
+      border-right:1px solid rgba(255,255,255,.06);
       background:#000;
-      border-right:1px solid rgba(255,255,255,.08);
     }
 
     .mediaImg{
       width:100%;
       height:100%;
       object-fit:cover;
+      object-position:center;
       display:block;
     }
 
     .infoPanel{
-      background: radial-gradient(circle at top left, #181818, #070707 70%);
+      min-width:0;
+      min-height:0;
+      background: radial-gradient(circle at top left, #161616, #070707 70%);
       color:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:40px;
+      padding:28px 32px;
       text-align:center;
+      overflow:hidden;
     }
 
     .infoBox{
       width:100%;
-      max-width:700px;
+      max-width:640px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:14px;
     }
 
     .tag{
@@ -170,60 +205,113 @@
       border-radius:999px;
       background:rgba(255,255,255,.08);
       font-weight:800;
-      font-size: clamp(14px, 1vw, 18px);
+      font-size: clamp(13px, .95vw, 17px);
       text-transform:uppercase;
-      letter-spacing:.5px;
-      margin-bottom:18px;
+      letter-spacing:.4px;
     }
 
     .productTitle{
-      font-size: clamp(34px, 4vw, 78px);
+      margin:0;
+      font-size: clamp(30px, 4vw, 72px);
       font-weight:900;
       line-height:1.02;
       text-transform:uppercase;
-      margin:0 0 18px;
+      word-break:break-word;
     }
 
     .productText{
-      font-size: clamp(20px, 2vw, 38px);
+      margin:0;
+      font-size: clamp(18px, 1.8vw, 34px);
       opacity:.92;
-      margin:0 0 28px;
-      line-height:1.2;
+      line-height:1.18;
+      max-width:90%;
     }
 
     .productPrice{
       display:inline-block;
       background:#fff;
       color:#000;
-      padding:16px 30px;
+      padding:14px 26px;
       border-radius:18px;
       font-weight:900;
-      font-size: clamp(34px, 4vw, 78px);
+      font-size: clamp(30px, 3.4vw, 68px);
       line-height:1;
+      margin-top:4px;
+    }
+
+    @media (max-width: 1100px){
+      .hero{
+        padding:12px 18px 8px;
+      }
+
+      .logoBox{
+        width:110px;
+        height:70px;
+      }
+
+      .title{
+        font-size: clamp(24px, 3vw, 48px);
+      }
+
+      .plan{
+        min-height:145px;
+      }
+
+      .showcaseWrap{
+        padding:14px 18px 18px;
+      }
+
+      .infoPanel{
+        padding:22px 20px;
+      }
     }
 
     @media (max-width: 900px){
+      .page{
+        height:auto;
+        min-height:100vh;
+        grid-template-rows:auto auto;
+      }
+
       .heroTop{
         flex-direction:column;
+        gap:10px;
       }
 
       .plans{
         grid-template-columns:1fr;
       }
 
+      .plan{
+        min-height:auto;
+        padding:10px 8px;
+      }
+
+      .showcaseWrap{
+        padding:16px;
+      }
+
       .showcase{
+        min-height:520px;
         grid-template-columns:1fr;
-        grid-template-rows:45% 55%;
-        min-height:600px;
+        grid-template-rows: 48% 52%;
       }
 
       .mediaPanel{
         border-right:none;
-        border-bottom:1px solid rgba(255,255,255,.08);
+        border-bottom:1px solid rgba(255,255,255,.06);
       }
 
       .infoPanel{
-        padding:28px 20px;
+        padding:24px 18px;
+      }
+
+      .productTitle{
+        font-size: clamp(28px, 8vw, 46px);
+      }
+
+      .productText{
+        max-width:100%;
       }
     }
   </style>
@@ -233,7 +321,7 @@
 
     <header class="hero">
       <div class="heroTop">
-        <div class="logoBox">
+        <div class="logoBox logoLeft">
           <img src="/img/logo-izq.png" alt="Logo izquierdo" class="logoImg">
         </div>
 
@@ -241,7 +329,7 @@
           <div class="title">MENÚ DEL DÍA</div>
         </div>
 
-        <div class="logoBox">
+        <div class="logoBox logoRight">
           <img src="/img/logo-der.png" alt="Logo derecho" class="logoImg">
         </div>
       </div>
@@ -272,22 +360,21 @@
 
     <main class="showcaseWrap">
       <section class="showcase">
-
         <div class="mediaPanel">
           <img id="slideImage" class="mediaImg" alt="Producto destacado">
         </div>
 
         <div class="infoPanel">
           <div class="infoBox">
-            <div id="slideTag" class="tag">Destacado</div>
-            <h2 id="slideTitle" class="productTitle">Menú del día</h2>
-            <p id="slideText" class="productText">Descripción del producto</p>
-            <div id="slidePrice" class="productPrice">$0</div>
+            <div id="slideTag" class="tag">Menú del día</div>
+            <h2 id="slideTitle" class="productTitle">Plato de fondo</h2>
+            <p id="slideText" class="productText">Incluye pan, sopa y jugo o agua.</p>
+            <div id="slidePrice" class="productPrice">$4.100</div>
           </div>
         </div>
-
       </section>
     </main>
+
   </div>
 
   <script>
@@ -311,7 +398,7 @@
       {
         tag: "Postre",
         title: "Postre Casero",
-        text: "Pregunta por la opción disponible hoy.",
+        text: "Consulta la opción disponible hoy.",
         price: "$1.500",
         image: "/img/postre.jpg"
       },
@@ -331,12 +418,10 @@
         const r = await fetch('/api/version', { cache: 'no-store' });
         const data = await r.json();
 
-        if (data.v !== lastV && data.url) {
-          lastV = data.v;
-          return data.url + '?v=' + data.v;
-        }
-
         if (data.url) {
+          if (data.v !== lastV) {
+            lastV = data.v;
+          }
           return data.url + '?v=' + data.v;
         }
       } catch (e) {
