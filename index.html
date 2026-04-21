@@ -18,14 +18,12 @@
       background:#111;
     }
 
-    /* Layout general: header arriba + slider abajo */
     .page{
       height:100vh;
       display:flex;
       flex-direction:column;
     }
 
-    /* Header estilo afiche */
     .hero{
       background: var(--yellow);
       color:#111;
@@ -36,23 +34,31 @@
 
     .heroTop{
       display:flex;
-      align-items:flex-start;
+      align-items:center;
       justify-content:space-between;
-      gap:18px;
+      gap:24px;
     }
 
     .logoBox{
-      width:190px;
-      height:70px;
+      width:180px;
+      height:140px;
       display:flex;
       align-items:center;
-      justify-content:flex-start;
-      font-weight:700;
-      opacity:.85;
+      justify-content:center;
+      flex-shrink:0;
     }
 
     .logoBox.right{
-      justify-content:flex-end;
+      justify-content:center;
+    }
+
+    .logoImg{
+      max-width:100%;
+      max-height:100%;
+      width:auto;
+      height:auto;
+      object-fit:contain;
+      display:block;
     }
 
     .titleWrap{
@@ -72,9 +78,9 @@
       font-size: clamp(34px, 4vw, 72px);
       text-transform: uppercase;
       border-radius: 6px;
+      text-align:center;
     }
 
-    /* 3 columnas de combos/precios */
     .plans{
       margin-top: 18px;
       display:grid;
@@ -122,7 +128,6 @@
       opacity:.9;
     }
 
-    /* Zona inferior (slides) */
     .imgArea{
       flex:1;
       background:#111;
@@ -161,7 +166,6 @@
       z-index:2;
     }
 
-    /* Slide 1 (imagen dinámica) */
     #menuImg{
       width:100%;
       height:100%;
@@ -170,7 +174,6 @@
       display:block;
     }
 
-    /* Slides de texto */
     .promo{
       background: linear-gradient(135deg, #0e0e0e, #1c1c1c);
       color:#fff;
@@ -230,12 +233,29 @@
       margin: 6px 0;
     }
 
-    /* Responsive: si es angosto, apila planes */
     @media (max-width: 900px){
-      .logoBox{ display:none; }
-      .plans{ grid-template-columns: 1fr; }
-      .imgArea{ padding: 18px; }
-      .slider{ max-width: 100%; border-radius: 18px; }
+      .heroTop{
+        flex-direction:column;
+        gap:14px;
+      }
+
+      .logoBox{
+        width:120px;
+        height:90px;
+      }
+
+      .plans{
+        grid-template-columns: 1fr;
+      }
+
+      .imgArea{
+        padding: 18px;
+      }
+
+      .slider{
+        max-width: 100%;
+        border-radius: 18px;
+      }
     }
   </style>
 </head>
@@ -243,7 +263,6 @@
 <body>
   <div class="page">
 
-    <!-- HEADER (estilo afiche) -->
     <header class="hero">
       <div class="heroTop">
         <div class="logoBox">
@@ -254,7 +273,9 @@
           <div class="title">MENÚ DEL DÍA</div>
         </div>
 
-        <div class="logoBox right">LOGO DER</div>
+        <div class="logoBox right">
+          <img src="/img/logo-der.png" alt="Logo derecho" class="logoImg">
+        </div>
       </div>
 
       <div class="plans">
@@ -281,16 +302,13 @@
       </div>
     </header>
 
-    <!-- SLIDES DEBAJO -->
     <main class="imgArea">
       <div class="slider">
 
-        <!-- Slide 1: Imagen menú (dinámica) -->
         <div class="slide active">
           <img id="menuImg" alt="Menú" />
         </div>
 
-        <!-- Slide 2: Promoción -->
         <div class="slide promo">
           <div class="promoBox">
             <h2 class="promoTitle">Promoción del Día</h2>
@@ -299,7 +317,6 @@
           </div>
         </div>
 
-        <!-- Slide 3: Información -->
         <div class="slide info">
           <div>
             <h2 class="infoTitle">Horario de Atención</h2>
@@ -314,35 +331,32 @@
 
   </div>
 
-<script>
-let lastV = null;
+  <script>
+    let lastV = null;
 
-// --- Slider ---
-let currentSlide = 0;
-const slides = document.querySelectorAll('.slide');
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
 
-function changeSlide(){
-  slides[currentSlide].classList.remove('active');
-  currentSlide = (currentSlide + 1) % slides.length;
-  slides[currentSlide].classList.add('active');
-}
+    function changeSlide(){
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
 
-// Cambiar slide cada 10s (ajustable)
-setInterval(changeSlide, 10000);
+    setInterval(changeSlide, 10000);
 
-// --- Imagen dinámica (solo actualiza src; la slide 1 ya la muestra) ---
-async function refresh() {
-  const r = await fetch('/api/version', { cache: 'no-store' });
-  const data = await r.json();
+    async function refresh() {
+      const r = await fetch('/api/version', { cache: 'no-store' });
+      const data = await r.json();
 
-  if (data.v !== lastV && data.url) {
-    lastV = data.v;
-    document.getElementById('menuImg').src = data.url + '?v=' + data.v;
-  }
-}
+      if (data.v !== lastV && data.url) {
+        lastV = data.v;
+        document.getElementById('menuImg').src = data.url + '?v=' + data.v;
+      }
+    }
 
-refresh();
-setInterval(refresh, 15000);
-</script>
+    refresh();
+    setInterval(refresh, 15000);
+  </script>
 </body>
 </html>
