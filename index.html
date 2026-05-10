@@ -1,710 +1,842 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Menú del Día</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 
-  <style>
-    :root{
-      --yellow:#f6d86a;
-      --black:#0b0b0b;
-      --white:#ffffff;
-    }
+<title>Menú TV</title>
 
-    *{
-      box-sizing:border-box;
-    }
+<style>
 
-    html, body{
-      margin:0;
-      height:100%;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background:#111;
-    }
+:root{
+  --yellow:#f6d86a;
+  --bg:#0a0a0a;
+  --panel:#121212;
+  --panel2:#1b1b1b;
+  --white:#ffffff;
+}
 
-    .page{
-      height:100vh;
-      display:grid;
-      grid-template-rows:auto 1fr;
-      overflow:hidden;
-    }
+*{
+  box-sizing:border-box;
+}
 
-    /* =========================
-       HEADER
-    ========================== */
+html,
+body{
+  margin:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  background:#000;
+  font-family:
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+}
 
-    .hero{
-      background:var(--yellow);
-      color:#111;
-      padding:14px 24px 10px;
-      border-bottom:6px solid rgba(0,0,0,.08);
-    }
+/* =========================================
+   PANTALLA COMPLETA TV
+========================================= */
 
-    .heroTop{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-    }
+.screen{
+  width:100vw;
+  height:100vh;
+  display:grid;
+  grid-template-columns: 34% 33% 33%;
+  background:#000;
+}
 
-    .logoBox{
-      width:130px;
-      height:80px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      flex-shrink:0;
-    }
+/* =========================================
+   COLUMNA 1
+========================================= */
 
-    .logoImg{
-      max-width:100%;
-      max-height:100%;
-      object-fit:contain;
-      display:block;
-    }
+.leftPanel{
+  background:#000;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  overflow:hidden;
+  border-right:3px solid rgba(255,255,255,.06);
+}
 
-    .titleWrap{
-      flex:1;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-    }
+/* HEADER */
 
-    .title{
-      background:#000;
-      color:#fff;
-      padding:10px 24px;
-      border-radius:10px;
-      font-weight:900;
-      font-size:clamp(28px, 3.2vw, 60px);
-      text-transform:uppercase;
-      line-height:1;
-      text-align:center;
-    }
+.topHeader{
+  background:var(--yellow);
+  padding:18px;
+  flex-shrink:0;
+}
 
-    .plans{
-      margin-top:8px;
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:10px;
-      align-items:start;
-    }
+.logoRow{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
 
-    .plan{
-      padding:4px 8px;
-      text-align:center;
-      min-height:160px;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:flex-start;
-    }
+.logo{
+  width:90px;
+  height:70px;
+  object-fit:contain;
+}
 
-    .price{
-      font-weight:900;
-      font-size:clamp(24px, 2.4vw, 46px);
-      margin-bottom:8px;
-      line-height:1;
-    }
+.mainTitle{
+  flex:1;
+  text-align:center;
+  background:#000;
+  color:#fff;
+  border-radius:12px;
+  padding:14px 18px;
+  font-size:40px;
+  font-weight:900;
+  line-height:1;
+  text-transform:uppercase;
+}
 
-    .badge{
-      display:inline-block;
-      background:#000;
-      color:#fff;
-      padding:10px 16px;
-      border-radius:10px;
-      font-weight:900;
-      font-size:clamp(16px, 1.4vw, 28px);
-      text-transform:uppercase;
-      line-height:1.05;
-    }
+/* PLANES */
 
-    .plus{
-      margin-top:14px;
-      font-weight:900;
-      font-size:clamp(18px, 1.5vw, 28px);
-      line-height:1.02;
-      text-transform:uppercase;
-    }
+.menuPlans{
+  margin-top:18px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
 
-    .foot{
-      margin-top:6px;
-      text-align:center;
-      font-size:clamp(11px, .95vw, 16px);
-      opacity:.92;
-      line-height:1.2;
-    }
+.planCard{
+  background:rgba(0,0,0,.08);
+  border-radius:16px;
+  padding:16px;
+}
 
-    /* =========================
-       CONTENIDO
-    ========================== */
+.planPrice{
+  font-size:42px;
+  font-weight:900;
+  line-height:1;
+  margin-bottom:10px;
+}
 
-    .showcaseWrap{
-      min-height:0;
-      background:#111;
-      padding:16px 24px 20px;
-      overflow:hidden;
-    }
+.planName{
+  display:inline-block;
+  background:#000;
+  color:#fff;
+  padding:10px 16px;
+  border-radius:10px;
+  font-size:24px;
+  font-weight:900;
+  text-transform:uppercase;
+  line-height:1.1;
+}
 
-    .showcase{
-      width:100%;
-      height:100%;
-      background:#050505;
-      border-radius:24px;
-      overflow:hidden;
-      display:grid;
-      grid-template-columns:38% 31% 31%;
-      box-shadow:
-        0 18px 50px rgba(0,0,0,.35),
-        0 0 0 1px rgba(255,255,255,.05);
-    }
+.planExtra{
+  margin-top:12px;
+  font-size:22px;
+  font-weight:800;
+  line-height:1.15;
+}
 
-    /* =========================
-       COLUMNA 1
-    ========================== */
+.planFoot{
+  margin-top:18px;
+  font-size:15px;
+  font-weight:700;
+  line-height:1.3;
+}
 
-    .mediaPanel{
-      position:relative;
-      overflow:hidden;
-      background:#000;
-      border-right:1px solid rgba(255,255,255,.06);
-    }
+/* FOTO */
 
-    .mediaImg{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-    }
+.photoArea{
+  flex:1;
+  position:relative;
+  overflow:hidden;
+  background:#000;
+}
 
-    .overlayInfo{
-      position:absolute;
-      left:0;
-      bottom:0;
-      width:100%;
-      padding:24px;
-      background:linear-gradient(
-        to top,
-        rgba(0,0,0,.9),
-        rgba(0,0,0,.25),
-        transparent
-      );
-      color:#fff;
-    }
+.slideImage{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
 
-    .tag{
-      display:inline-block;
-      padding:8px 16px;
-      border-radius:999px;
-      background:rgba(255,255,255,.08);
-      font-weight:800;
-      font-size:14px;
-      text-transform:uppercase;
-      letter-spacing:.4px;
-      margin-bottom:14px;
-    }
+/* INFO FOTO */
 
-    .productTitle{
-      margin:0 0 10px;
-      font-size:clamp(34px, 3vw, 62px);
-      font-weight:900;
-      line-height:1;
-      text-transform:uppercase;
-    }
+.overlay{
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  padding:26px;
+  background:
+    linear-gradient(
+      to top,
+      rgba(0,0,0,.95),
+      rgba(0,0,0,.45),
+      transparent
+    );
+}
 
-    .productText{
-      margin:0 0 18px;
-      font-size:20px;
-      line-height:1.3;
-      opacity:.92;
-    }
+.tag{
+  display:inline-block;
+  padding:8px 14px;
+  border-radius:999px;
+  background:rgba(255,255,255,.1);
+  color:#fff;
+  font-size:15px;
+  font-weight:800;
+  margin-bottom:14px;
+  text-transform:uppercase;
+}
 
-    .productPrice{
-      display:inline-block;
-      background:#fff;
-      color:#000;
-      padding:14px 24px;
-      border-radius:18px;
-      font-weight:900;
-      font-size:42px;
-      line-height:1;
-    }
+.productTitle{
+  margin:0;
+  color:#fff;
+  font-size:48px;
+  line-height:1;
+  font-weight:900;
+  text-transform:uppercase;
+}
 
-    /* =========================
-       COLUMNAS 2 Y 3
-    ========================== */
+.productText{
+  margin-top:12px;
+  margin-bottom:18px;
+  color:#fff;
+  font-size:24px;
+  line-height:1.2;
+}
 
-    .listPanel,
-    .promoPanel{
-      background:#111;
-      color:#fff;
-      padding:24px;
-      overflow:auto;
-    }
+.productPrice{
+  display:inline-block;
+  background:#fff;
+  color:#000;
+  padding:14px 22px;
+  border-radius:18px;
+  font-size:44px;
+  font-weight:900;
+  line-height:1;
+}
 
-    .listPanel{
-      border-right:1px solid rgba(255,255,255,.06);
-    }
+/* =========================================
+   COLUMNAS 2 Y 3
+========================================= */
 
-    .panelTitle{
-      margin:0 0 22px;
-      font-size:32px;
-      font-weight:900;
-      color:var(--yellow);
-    }
+.centerPanel,
+.rightPanel{
+  background:var(--panel);
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
 
-    .foodItem{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:16px 0;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      font-size:20px;
-      gap:16px;
-    }
+.centerPanel{
+  border-right:3px solid rgba(255,255,255,.06);
+}
 
-    .foodItem strong{
-      font-size:22px;
-      white-space:nowrap;
-    }
+/* TITULOS */
 
-    .promoCard{
-      background:#1a1a1a;
-      border-radius:18px;
-      padding:20px;
-      margin-bottom:18px;
-      border:1px solid rgba(255,255,255,.08);
-    }
+.sectionHeader{
+  background:var(--yellow);
+  color:#000;
+  padding:24px 18px;
+  font-size:38px;
+  font-weight:900;
+  text-transform:uppercase;
+  text-align:center;
+  flex-shrink:0;
+}
 
-    .promoName{
-      font-size:24px;
-      font-weight:900;
-      margin-bottom:8px;
-    }
+/* LISTA */
 
-    .promoDesc{
-      opacity:.85;
-      margin-bottom:14px;
-      line-height:1.3;
-    }
+.menuList{
+  flex:1;
+  padding:20px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
 
-    .promoPrice{
-      display:inline-block;
-      background:var(--yellow);
-      color:#000;
-      padding:10px 18px;
-      border-radius:12px;
-      font-size:28px;
-      font-weight:900;
-    }
+.item{
+  background:var(--panel2);
+  border-radius:18px;
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  min-height:92px;
+}
 
-    /* =========================
-       RESPONSIVE
-    ========================== */
+.itemInfo{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding-right:14px;
+}
 
-    @media (max-width:1100px){
+.itemName{
+  color:#fff;
+  font-size:28px;
+  font-weight:900;
+  line-height:1.05;
+}
 
-      .showcase{
-        grid-template-columns:1fr;
-        overflow:auto;
-      }
+.itemDesc{
+  color:rgba(255,255,255,.75);
+  font-size:18px;
+  line-height:1.2;
+}
 
-      .mediaPanel{
-        min-height:500px;
-        border-right:none;
-        border-bottom:1px solid rgba(255,255,255,.06);
-      }
+.itemPrice{
+  flex-shrink:0;
+  background:var(--yellow);
+  color:#000;
+  padding:14px 18px;
+  border-radius:14px;
+  font-size:28px;
+  font-weight:900;
+  line-height:1;
+}
 
-      .listPanel{
-        border-right:none;
-        border-bottom:1px solid rgba(255,255,255,.06);
-      }
+/* PROMOS */
 
-      .showcaseWrap{
-        overflow:auto;
-      }
+.promo{
+  background:
+    linear-gradient(
+      135deg,
+      #262626,
+      #171717
+    );
 
-      .page{
-        height:auto;
-      }
-    }
+  border:2px solid rgba(255,255,255,.06);
+}
 
-    @media (max-width:900px){
+.promo .itemPrice{
+  background:#fff;
+}
 
-      .heroTop{
-        flex-direction:column;
-      }
+/* TV SAFE */
 
-      .plans{
-        grid-template-columns:1fr;
-      }
+@media (max-width:1600px){
 
-      .plan{
-        min-height:auto;
-      }
+  .mainTitle{
+    font-size:34px;
+  }
 
-      .showcaseWrap{
-        padding:12px;
-      }
+  .planPrice{
+    font-size:34px;
+  }
 
-      .productTitle{
-        font-size:42px;
-      }
+  .planName{
+    font-size:20px;
+  }
 
-      .productPrice{
-        font-size:34px;
-      }
+  .planExtra{
+    font-size:18px;
+  }
 
-      .panelTitle{
-        font-size:28px;
-      }
+  .productTitle{
+    font-size:40px;
+  }
 
-      .foodItem{
-        font-size:18px;
-      }
-    }
+  .productText{
+    font-size:20px;
+  }
 
-  </style>
+  .productPrice{
+    font-size:36px;
+  }
+
+  .sectionHeader{
+    font-size:32px;
+  }
+
+  .itemName{
+    font-size:24px;
+  }
+
+  .itemPrice{
+    font-size:24px;
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
-  <div class="page">
+<div class="screen">
 
-    <!-- =========================
-         HEADER
-    ========================== -->
+  <!-- =====================================
+       COLUMNA 1
+  ====================================== -->
 
-    <header class="hero">
+  <div class="leftPanel">
 
-      <div class="heroTop">
+    <div class="topHeader">
 
-        <div class="logoBox">
-          <img src="/img/logo-izq.png" alt="Logo izquierdo" class="logoImg">
+      <div class="logoRow">
+
+        <img
+          src="/img/logo-izq.png"
+          class="logo"
+        >
+
+        <div class="mainTitle">
+          MENÚ DEL DÍA
         </div>
 
-        <div class="titleWrap">
-          <div class="title">
-            MENÚ DEL DÍA
+        <img
+          src="/img/logo-der.png"
+          class="logo"
+        >
+
+      </div>
+
+      <div class="menuPlans">
+
+        <div class="planCard">
+
+          <div class="planPrice">
+            $4.100
           </div>
+
+          <div class="planName">
+            Plato de Fondo
+          </div>
+
         </div>
 
-        <div class="logoBox">
-          <img src="/img/logo-der.png" alt="Logo derecho" class="logoImg">
+        <div class="planCard">
+
+          <div class="planPrice">
+            $4.600
+          </div>
+
+          <div class="planName">
+            Fondo + Postre o Ensalada
+          </div>
+
+        </div>
+
+        <div class="planCard">
+
+          <div class="planPrice">
+            $5.100
+          </div>
+
+          <div class="planName">
+            Fondo + Postre y Ensalada
+          </div>
+
         </div>
 
       </div>
 
-      <div class="plans">
+      <div class="planFoot">
+        Todos los menús incluyen pan, sopa y jugo o agua.
+      </div>
 
-        <div class="plan">
-          <div class="price">$4.100</div>
-          <div class="badge">Plato de Fondo</div>
+    </div>
+
+    <div class="photoArea">
+
+      <img
+        id="slideImage"
+        class="slideImage"
+        alt="producto"
+      >
+
+      <div class="overlay">
+
+        <div
+          id="slideTag"
+          class="tag"
+        >
+          Menú del día
         </div>
 
-        <div class="plan">
-          <div class="price">$4.600</div>
-          <div class="badge">Plato de Fondo</div>
+        <h2
+          id="slideTitle"
+          class="productTitle"
+        >
+          Plato de fondo
+        </h2>
 
-          <div class="plus">
-            +<br>
-            Postre o<br>
-            Ensalada
-          </div>
+        <div
+          id="slideText"
+          class="productText"
+        >
+          Incluye sopa y jugo
         </div>
 
-        <div class="plan">
-          <div class="price">$5.100</div>
-          <div class="badge">Plato de Fondo</div>
-
-          <div class="plus">
-            +<br>
-            Postre y<br>
-            Ensalada
-          </div>
+        <div
+          id="slidePrice"
+          class="productPrice"
+        >
+          $4.100
         </div>
 
       </div>
 
-      <div class="foot">
-        Todos los menús incluyen pan, sopa y jugo o agua • Menús válidos hasta agotar stock.
-      </div>
-
-    </header>
-
-    <!-- =========================
-         CONTENIDO
-    ========================== -->
-
-    <main class="showcaseWrap">
-
-      <section class="showcase">
-
-        <!-- COLUMNA 1 -->
-
-        <div class="mediaPanel">
-
-          <img
-            id="slideImage"
-            class="mediaImg"
-            alt="Producto destacado"
-          >
-
-          <div class="overlayInfo">
-
-            <div id="slideTag" class="tag">
-              Menú del día
-            </div>
-
-            <h2 id="slideTitle" class="productTitle">
-              Plato de Fondo
-            </h2>
-
-            <p id="slideText" class="productText">
-              Incluye pan, sopa y jugo o agua.
-            </p>
-
-            <div id="slidePrice" class="productPrice">
-              $4.100
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- COLUMNA 2 -->
-
-        <div class="listPanel">
-
-          <h3 class="panelTitle">
-            ALIMENTOS
-          </h3>
-
-          <div class="foodItem">
-            <span>Completo Italiano</span>
-            <strong>$2.550</strong>
-          </div>
-
-          <div class="foodItem">
-            <span>Sandwich Huevo</span>
-            <strong>$1.250</strong>
-          </div>
-
-          <div class="foodItem">
-            <span>Desayuno 1</span>
-            <strong>$1.450</strong>
-          </div>
-
-          <div class="foodItem">
-            <span>Empanada Queso</span>
-            <strong>$1.800</strong>
-          </div>
-
-          <div class="foodItem">
-            <span>Bebida lata</span>
-            <strong>$1.200</strong>
-          </div>
-
-          <div class="foodItem">
-            <span>Agua mineral</span>
-            <strong>$1.000</strong>
-          </div>
-
-        </div>
-
-        <!-- COLUMNA 3 -->
-
-        <div class="promoPanel">
-
-          <h3 class="panelTitle">
-            PROMOCIONES
-          </h3>
-
-          <div class="promoCard">
-
-            <div class="promoName">
-              Promo Completo
-            </div>
-
-            <div class="promoDesc">
-              Completo italiano + bebida lata
-            </div>
-
-            <div class="promoPrice">
-              $3.500
-            </div>
-
-          </div>
-
-          <div class="promoCard">
-
-            <div class="promoName">
-              Promo Desayuno
-            </div>
-
-            <div class="promoDesc">
-              Café + sandwich + jugo
-            </div>
-
-            <div class="promoPrice">
-              $2.300
-            </div>
-
-          </div>
-
-          <div class="promoCard">
-
-            <div class="promoName">
-              Promo Almuerzo
-            </div>
-
-            <div class="promoDesc">
-              Plato fondo + postre + bebida
-            </div>
-
-            <div class="promoPrice">
-              $5.100
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
+    </div>
 
   </div>
 
-  <script>
+  <!-- =====================================
+       COLUMNA 2
+  ====================================== -->
 
-    let lastV = null;
+  <div class="centerPanel">
 
-    const items = [
+    <div class="sectionHeader">
+      Opciones del Menú
+    </div>
 
-      {
-        tag: "Menú del día",
-        title: "Plato de Fondo",
-        text: "Incluye pan, sopa y jugo o agua.",
-        price: "$4.100",
-        dynamic: true
-      },
+    <div class="menuList">
 
-      {
-        tag: "Sandwiches",
-        title: "Sandwich Huevo",
-        text: "Hasta agotar stock",
-        price: "$1.250",
-        image: "/img/pan-huevo.png"
-      },
+      <div class="item">
+        <div class="itemInfo">
+          <div class="itemName">
+            Completo Italiano
+          </div>
 
-      {
-        tag: "Completos",
-        title: "Completo Italiano",
-        text: "Vienesa + tomate + palta",
-        price: "$2.550",
-        image: "/img/completo.jpg"
-      },
+          <div class="itemDesc">
+            Vienesa, tomate y palta
+          </div>
+        </div>
 
-      {
-        tag: "Desayunos",
-        title: "Desayuno 1",
-        text: "Té, café o leche + sandwich",
-        price: "$1.450",
-        image: "/img/desayuno.jpg"
+        <div class="itemPrice">
+          $2.550
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="itemInfo">
+          <div class="itemName">
+            Sandwich Huevo
+          </div>
+
+          <div class="itemDesc">
+            Pan frica recién horneado
+          </div>
+        </div>
+
+        <div class="itemPrice">
+          $1.250
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="itemInfo">
+          <div class="itemName">
+            Desayuno 1
+          </div>
+
+          <div class="itemDesc">
+            Café + sandwich
+          </div>
+        </div>
+
+        <div class="itemPrice">
+          $1.450
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="itemInfo">
+          <div class="itemName">
+            Empanada Queso
+          </div>
+
+          <div class="itemDesc">
+            Masa artesanal
+          </div>
+        </div>
+
+        <div class="itemPrice">
+          $1.800
+        </div>
+      </div>
+
+      <div class="item">
+        <div class="itemInfo">
+          <div class="itemName">
+            Bebida Lata
+          </div>
+
+          <div class="itemDesc">
+            Coca Cola, Fanta o Sprite
+          </div>
+        </div>
+
+        <div class="itemPrice">
+          $1.200
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- =====================================
+       COLUMNA 3
+  ====================================== -->
+
+  <div class="rightPanel">
+
+    <div class="sectionHeader">
+      Promociones
+    </div>
+
+    <div class="menuList">
+
+      <div class="item promo">
+
+        <div class="itemInfo">
+
+          <div class="itemName">
+            Promo Completo
+          </div>
+
+          <div class="itemDesc">
+            Completo + bebida lata
+          </div>
+
+        </div>
+
+        <div class="itemPrice">
+          $3.500
+        </div>
+
+      </div>
+
+      <div class="item promo">
+
+        <div class="itemInfo">
+
+          <div class="itemName">
+            Promo Almuerzo
+          </div>
+
+          <div class="itemDesc">
+            Fondo + postre + bebida
+          </div>
+
+        </div>
+
+        <div class="itemPrice">
+          $5.100
+        </div>
+
+      </div>
+
+      <div class="item promo">
+
+        <div class="itemInfo">
+
+          <div class="itemName">
+            Promo Desayuno
+          </div>
+
+          <div class="itemDesc">
+            Café + sandwich + jugo
+          </div>
+
+        </div>
+
+        <div class="itemPrice">
+          $2.300
+        </div>
+
+      </div>
+
+      <div class="item promo">
+
+        <div class="itemInfo">
+
+          <div class="itemName">
+            Combo Familiar
+          </div>
+
+          <div class="itemDesc">
+            2 completos + 2 bebidas
+          </div>
+
+        </div>
+
+        <div class="itemPrice">
+          $6.900
+        </div>
+
+      </div>
+
+      <div class="item promo">
+
+        <div class="itemInfo">
+
+          <div class="itemName">
+            Promo Once
+          </div>
+
+          <div class="itemDesc">
+            Té + pastel + sandwich
+          </div>
+
+        </div>
+
+        <div class="itemPrice">
+          $3.200
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+
+let lastV = null;
+
+const items = [
+
+  {
+    tag: "Menú del día",
+    title: "Plato de Fondo",
+    text: "Incluye sopa y jugo o agua",
+    price: "$4.100",
+    dynamic: true
+  },
+
+  {
+    tag: "Sandwiches",
+    title: "Sandwich Huevo",
+    text: "Hasta agotar stock",
+    price: "$1.250",
+    image: "/img/pan-huevo.png"
+  },
+
+  {
+    tag: "Completos",
+    title: "Completo Italiano",
+    text: "Vienesa + tomate + palta",
+    price: "$2.550",
+    image: "/img/completo.jpg"
+  },
+
+  {
+    tag: "Desayunos",
+    title: "Desayuno 1",
+    text: "Café + sandwich",
+    price: "$1.450",
+    image: "/img/desayuno.jpg"
+  }
+
+];
+
+let current = 0;
+
+async function getDynamicMenuImage(){
+
+  try{
+
+    const r = await fetch(
+      '/api/version',
+      { cache:'no-store' }
+    );
+
+    const data = await r.json();
+
+    if(data.url){
+
+      if(data.v !== lastV){
+        lastV = data.v;
       }
 
-    ];
-
-    let current = 0;
-
-    async function getDynamicMenuImage(){
-
-      try{
-
-        const r = await fetch('/api/version', {
-          cache:'no-store'
-        });
-
-        const data = await r.json();
-
-        if(data.url){
-
-          if(data.v !== lastV){
-            lastV = data.v;
-          }
-
-          return data.url + '?v=' + data.v;
-        }
-
-      }catch(e){
-
-        console.error(
-          'Error cargando imagen dinámica:',
-          e
-        );
-
-      }
-
-      return "";
+      return data.url + '?v=' + data.v;
 
     }
 
-    async function renderSlide(index){
+  }catch(e){
 
-      const item = items[index];
+    console.error(
+      'Error cargando imagen:',
+      e
+    );
 
-      document.getElementById('slideTag').textContent = item.tag;
+  }
 
-      document.getElementById('slideTitle').textContent = item.title;
+  return "";
 
-      document.getElementById('slideText').textContent = item.text;
+}
 
-      document.getElementById('slidePrice').textContent = item.price;
+async function renderSlide(index){
 
-      if(item.dynamic){
+  const item = items[index];
 
-        const dynamicUrl = await getDynamicMenuImage();
+  document.getElementById(
+    'slideTag'
+  ).textContent = item.tag;
 
-        if(dynamicUrl){
+  document.getElementById(
+    'slideTitle'
+  ).textContent = item.title;
 
-          document.getElementById('slideImage').src =
-            dynamicUrl;
+  document.getElementById(
+    'slideText'
+  ).textContent = item.text;
 
-        }
+  document.getElementById(
+    'slidePrice'
+  ).textContent = item.price;
 
-      }else{
+  if(item.dynamic){
 
-        document.getElementById('slideImage').src =
-          item.image;
+    const dynamicUrl =
+      await getDynamicMenuImage();
 
-      }
+    if(dynamicUrl){
+
+      document.getElementById(
+        'slideImage'
+      ).src = dynamicUrl;
 
     }
 
-    async function nextSlide(){
+  }else{
 
-      current =
-        (current + 1) % items.length;
+    document.getElementById(
+      'slideImage'
+    ).src = item.image;
 
-      await renderSlide(current);
+  }
 
-    }
+}
 
-    renderSlide(current);
+async function nextSlide(){
 
-    setInterval(nextSlide, 10000);
+  current =
+    (current + 1) % items.length;
 
-    setInterval(async () => {
+  await renderSlide(current);
 
-      if(items[current].dynamic){
-        await renderSlide(current);
-      }
+}
 
-    }, 15000);
+renderSlide(current);
 
-  </script>
+setInterval(nextSlide, 10000);
+
+setInterval(async () => {
+
+  if(items[current].dynamic){
+    await renderSlide(current);
+  }
+
+}, 15000);
+
+</script>
 
 </body>
 </html>
