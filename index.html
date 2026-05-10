@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="es">
+
 <head>
+
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 
@@ -12,7 +14,6 @@
   --yellow:#f6d86a;
   --panel:#101010;
   --panel2:#181818;
-  --white:#ffffff;
 }
 
 *{
@@ -48,7 +49,7 @@ body{
   height:100vh;
 
   display:grid;
-  grid-template-columns:33% 33.5% 33.5%;
+  grid-template-columns:36% 32% 32%;
 
   overflow:hidden;
   background:#000;
@@ -91,13 +92,13 @@ body{
   background:
     linear-gradient(
       to top,
-      rgba(0,0,0,.95),
-      rgba(0,0,0,.35),
-      rgba(0,0,0,.15)
+      rgba(0,0,0,.96) 5%,
+      rgba(0,0,0,.55) 35%,
+      rgba(0,0,0,.15) 70%
     );
 }
 
-/* LOGO SUPERIOR */
+/* LOGO */
 
 .topLogo{
   display:flex;
@@ -117,63 +118,90 @@ body{
   align-items:flex-start;
 }
 
-.tag{
+/* HEADER MENU */
+
+.menuHeader{
   display:inline-block;
 
-  padding:10px 18px;
-
-  border-radius:999px;
-
-  background:rgba(255,255,255,.12);
-
+  background:#000;
   color:#fff;
 
-  font-size:16px;
-  font-weight:800;
+  padding:14px 22px;
+
+  border-radius:18px;
+
+  font-size:42px;
+  font-weight:900;
+  line-height:1;
+
+  margin-bottom:28px;
+
+  text-transform:uppercase;
+}
+
+/* PLANES */
+
+.menuPlan{
+  width:100%;
+
+  background:rgba(0,0,0,.52);
+
+  border-radius:24px;
+
+  padding:22px;
 
   margin-bottom:18px;
 
-  text-transform:uppercase;
+  backdrop-filter:blur(6px);
+
+  border:
+    2px solid rgba(255,255,255,.06);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.25);
 }
 
-.productTitle{
-  margin:0;
-
+.menuPlanPrice{
   color:#fff;
 
-  font-size:68px;
+  font-size:54px;
+  font-weight:900;
   line-height:1;
 
-  font-weight:900;
-
-  text-transform:uppercase;
+  margin-bottom:14px;
 }
 
-.productText{
-  margin-top:16px;
-  margin-bottom:24px;
-
-  color:#fff;
-
-  font-size:28px;
-  line-height:1.2;
-
-  max-width:80%;
-}
-
-.productPrice{
+.menuPlanDetail{
   display:inline-block;
 
   background:#fff;
   color:#000;
 
-  padding:18px 28px;
+  padding:12px 18px;
 
-  border-radius:22px;
+  border-radius:16px;
 
-  font-size:52px;
+  font-size:22px;
   font-weight:900;
-  line-height:1;
+  line-height:1.1;
+
+  text-transform:uppercase;
+}
+
+/* FOOT */
+
+.menuFoot{
+  margin-top:10px;
+
+  color:#fff;
+
+  font-size:18px;
+  font-weight:700;
+
+  line-height:1.35;
+
+  text-shadow:
+    0 2px 8px rgba(0,0,0,.45);
 }
 
 /* =========================================
@@ -201,9 +229,9 @@ body{
 
   text-align:center;
 
-  padding:26px 18px;
+  padding:18px 16px;
 
-  font-size:42px;
+  font-size:34px;
   font-weight:900;
 
   text-transform:uppercase;
@@ -215,13 +243,13 @@ body{
 
 .rightTop{
   position:absolute;
-  top:20px;
-  right:24px;
+  top:10px;
+  right:16px;
   z-index:20;
 }
 
 .logoRight{
-  width:120px;
+  width:92px;
   object-fit:contain;
 }
 
@@ -237,7 +265,7 @@ body{
 
   justify-content:space-evenly;
 
-  gap:12px;
+  gap:16px;
 
   overflow:hidden;
 }
@@ -265,6 +293,10 @@ body{
   gap:20px;
 
   border:2px solid rgba(255,255,255,.04);
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.03),
+    0 10px 25px rgba(0,0,0,.22);
 }
 
 /* INFO ITEM */
@@ -331,16 +363,16 @@ body{
 
 @media (max-width:1600px){
 
-  .productTitle{
-    font-size:54px;
+  .menuHeader{
+    font-size:34px;
   }
 
-  .productText{
-    font-size:22px;
+  .menuPlanPrice{
+    font-size:42px;
   }
 
-  .productPrice{
-    font-size:40px;
+  .menuPlanDetail{
+    font-size:18px;
   }
 
   .itemName{
@@ -358,6 +390,7 @@ body{
 }
 
 </style>
+
 </head>
 
 <body>
@@ -370,13 +403,17 @@ body{
 
   <div class="leftPanel">
 
+    <!-- IMAGEN FIJA -->
+
     <img
-      id="slideImage"
+      src="/img/menu-dia.jpg"
       class="slideImage"
-      alt="producto"
+      alt="Menú del día"
     >
 
     <div class="overlay">
+
+      <!-- LOGO -->
 
       <div class="topLogo">
 
@@ -387,34 +424,63 @@ body{
 
       </div>
 
+      <!-- INFO -->
+
       <div class="infoContent">
 
-        <div
-          id="slideTag"
-          class="tag"
-        >
-          Menú del día
+        <div class="menuHeader">
+          MENÚ DEL DÍA
         </div>
 
-        <h2
-          id="slideTitle"
-          class="productTitle"
-        >
-          Plato de Fondo
-        </h2>
+        <!-- PLAN 1 -->
 
-        <div
-          id="slideText"
-          class="productText"
-        >
-          Incluye sopa y jugo o agua
+        <div class="menuPlan">
+
+          <div class="menuPlanPrice">
+            $4.100
+          </div>
+
+          <div class="menuPlanDetail">
+            PLATO DE FONDO
+          </div>
+
         </div>
 
-        <div
-          id="slidePrice"
-          class="productPrice"
-        >
-          $4.100
+        <!-- PLAN 2 -->
+
+        <div class="menuPlan">
+
+          <div class="menuPlanPrice">
+            $4.600
+          </div>
+
+          <div class="menuPlanDetail">
+            FONDO + POSTRE O ENSALADA
+          </div>
+
+        </div>
+
+        <!-- PLAN 3 -->
+
+        <div class="menuPlan">
+
+          <div class="menuPlanPrice">
+            $5.100
+          </div>
+
+          <div class="menuPlanDetail">
+            FONDO + POSTRE Y ENSALADA
+          </div>
+
+        </div>
+
+        <!-- FOOT -->
+
+        <div class="menuFoot">
+
+          Todos los menús incluyen
+          pan, sopa y jugo o agua.
+
         </div>
 
       </div>
@@ -665,148 +731,6 @@ body{
   </div>
 
 </div>
-
-<script>
-
-let lastV = null;
-
-const items = [
-
-  {
-    tag: "Menú del día",
-    title: "Plato de Fondo",
-    text: "Incluye sopa y jugo o agua",
-    price: "$4.100",
-    dynamic: true
-  },
-
-  {
-    tag: "Sandwiches",
-    title: "Sandwich Huevo",
-    text: "Hasta agotar stock",
-    price: "$1.250",
-    image: "/img/pan-huevo.png"
-  },
-
-  {
-    tag: "Completos",
-    title: "Completo Italiano",
-    text: "Vienesa + tomate + palta",
-    price: "$2.550",
-    image: "/img/completo.jpg"
-  },
-
-  {
-    tag: "Desayunos",
-    title: "Desayuno 1",
-    text: "Café + sandwich",
-    price: "$1.450",
-    image: "/img/desayuno.jpg"
-  }
-
-];
-
-let current = 0;
-
-async function getDynamicMenuImage(){
-
-  try{
-
-    const r = await fetch(
-      '/api/version',
-      { cache:'no-store' }
-    );
-
-    const data = await r.json();
-
-    if(data.url){
-
-      if(data.v !== lastV){
-        lastV = data.v;
-      }
-
-      return data.url + '?v=' + data.v;
-
-    }
-
-  }catch(e){
-
-    console.error(
-      'Error cargando imagen:',
-      e
-    );
-
-  }
-
-  return "";
-
-}
-
-async function renderSlide(index){
-
-  const item = items[index];
-
-  document.getElementById(
-    'slideTag'
-  ).textContent = item.tag;
-
-  document.getElementById(
-    'slideTitle'
-  ).textContent = item.title;
-
-  document.getElementById(
-    'slideText'
-  ).textContent = item.text;
-
-  document.getElementById(
-    'slidePrice'
-  ).textContent = item.price;
-
-  if(item.dynamic){
-
-    const dynamicUrl =
-      await getDynamicMenuImage();
-
-    if(dynamicUrl){
-
-      document.getElementById(
-        'slideImage'
-      ).src = dynamicUrl;
-
-    }
-
-  }else{
-
-    document.getElementById(
-      'slideImage'
-    ).src = item.image;
-
-  }
-
-}
-
-async function nextSlide(){
-
-  current =
-    (current + 1) % items.length;
-
-  await renderSlide(current);
-
-}
-
-renderSlide(current);
-
-setInterval(nextSlide, 10000);
-
-setInterval(async () => {
-
-  if(items[current].dynamic){
-    await renderSlide(current);
-  }
-
-}, 15000);
-
-</script>
 
 </body>
 </html>
