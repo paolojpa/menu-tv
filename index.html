@@ -403,10 +403,10 @@ body{
 
   <div class="leftPanel">
 
-    <!-- IMAGEN FIJA -->
+    <!-- IMAGEN DINÁMICA -->
 
     <img
-      src="/img/menu-dia.jpg"
+      id="slideImage"
       class="slideImage"
       alt="Menú del día"
     >
@@ -731,6 +731,87 @@ body{
   </div>
 
 </div>
+
+<script>
+
+let lastV = null;
+
+async function loadMenuImage(){
+
+  try{
+
+    const r = await fetch(
+      '/api/version',
+      { cache:'no-store' }
+    );
+
+    const data = await r.json();
+
+    if(data.url){
+
+      const img =
+        document.getElementById(
+          'slideImage'
+        );
+
+      img.src =
+        data.url + '?v=' + data.v;
+
+      lastV = data.v;
+
+    }
+
+  }catch(e){
+
+    console.error(
+      'Error cargando menú:',
+      e
+    );
+
+  }
+
+}
+
+/* CARGA INICIAL */
+
+loadMenuImage();
+
+/* REFRESH AUTOMÁTICO */
+
+setInterval(async () => {
+
+  try{
+
+    const r = await fetch(
+      '/api/version',
+      { cache:'no-store' }
+    );
+
+    const data = await r.json();
+
+    if(data.v !== lastV){
+
+      const img =
+        document.getElementById(
+          'slideImage'
+        );
+
+      img.src =
+        data.url + '?v=' + data.v;
+
+      lastV = data.v;
+
+    }
+
+  }catch(e){
+
+    console.error(e);
+
+  }
+
+}, 15000);
+
+</script>
 
 </body>
 </html>
