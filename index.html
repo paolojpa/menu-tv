@@ -258,19 +258,19 @@ body{
 .menuList{
   flex:1;
 
-  padding:16px;
+  padding:12px; /* Reducido ligeramente para dar más margen a los ítems */
 
   display:flex;
   flex-direction:column;
 
-  justify-content:space-evenly;
+  justify-content:flex-start; /* Cambio a flex-start para que los elementos se apilen ordenadamente */
 
-  gap:16px;
+  gap:10px; /* Menor separación entre tarjetas para optimizar espacio */
 
   overflow:hidden;
 }
 
-/* ITEMS */
+/* ITEMS (MÁS COMPACTOS) */
 
 .item{
   background:
@@ -280,23 +280,23 @@ body{
       #111
     );
 
-  border-radius:24px;
+  border-radius:16px; /* Bordes un poco más sutiles para tarjetas delgadas */
 
-  min-height:110px;
+  min-height:65px; /* Reducido drásticamente de 110px para que quepan más */
 
-  padding:18px 22px;
+  padding:10px 18px; /* Menos relleno superior e inferior */
 
   display:flex;
   align-items:center;
   justify-content:space-between;
 
-  gap:20px;
+  gap:15px;
 
   border:2px solid rgba(255,255,255,.04);
 
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,.03),
-    0 10px 25px rgba(0,0,0,.22);
+    0 6px 15px rgba(0,0,0,.22);
 }
 
 /* INFO ITEM */
@@ -307,7 +307,7 @@ body{
   display:flex;
   flex-direction:column;
 
-  gap:8px;
+  gap:0px;
 
   min-width:0;
 }
@@ -315,17 +315,17 @@ body{
 .itemName{
   color:#fff;
 
-  font-size:34px;
+  font-size:26px; /* Reducido de 34px para mejorar empaquetado en pantalla */
   font-weight:900;
-  line-height:1.05;
+  line-height:1.1;
 }
 
-/* SE OCULTA LA DESCRIPCIÓN DESDE CSS */
+/* OCULTA LA DESCRIPCIÓN */
 .itemDesc{
   display: none;
 }
 
-/* PRECIO */
+/* PRECIO (MÁS AJUSTADO) */
 
 .itemPrice{
   flex-shrink:0;
@@ -333,11 +333,11 @@ body{
   background:var(--yellow);
   color:#000;
 
-  padding:16px 22px;
+  padding:8px 14px; /* Reducido el botón del precio */
 
-  border-radius:18px;
+  border-radius:12px;
 
-  font-size:30px;
+  font-size:24px; /* Reducido de 30px */
   font-weight:900;
   line-height:1;
 }
@@ -357,7 +357,7 @@ body{
   background:#fff;
 }
 
-/* RESPONSIVE TV */
+/* RESPONSIVE TV (Ajustado para pantallas estándar o de menores dimensiones) */
 
 @media (max-width:1600px){
 
@@ -374,15 +374,20 @@ body{
   }
 
   .itemName{
-    font-size:28px;
-  }
-
-  .itemDesc{
-    font-size:18px;
+    font-size:21px;
   }
 
   .itemPrice{
-    font-size:24px;
+    font-size:20px;
+  }
+
+  .item {
+    min-height: 55px;
+    padding: 8px 14px;
+  }
+
+  .menuList {
+    gap: 8px;
   }
 
 }
@@ -478,103 +483,43 @@ body{
     <div class="menuList">
 
       <div class="item">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Completo Italiano
-          </div>
-
-          <div class="itemDesc">
-            Vienesa, tomate y palta
-          </div>
-
+          <div class="itemName">Completo Italiano</div>
+          <div class="itemDesc">Vienesa, tomate y palta</div>
         </div>
-
-        <div class="itemPrice">
-          $2.550
-        </div>
-
+        <div class="itemPrice">$2.550</div>
       </div>
 
       <div class="item">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Sandwich Huevo
-          </div>
-
-          <div class="itemDesc">
-            Pan frica recién horneado
-          </div>
-
+          <div class="itemName">Sandwich Huevo</div>
+          <div class="itemDesc">Pan frica recién horneado</div>
         </div>
-
-        <div class="itemPrice">
-          $1.250
-        </div>
-
+        <div class="itemPrice">$1.250</div>
       </div>
 
       <div class="item">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Desayuno 1
-          </div>
-
-          <div class="itemDesc">
-            Café + sandwich
-          </div>
-
+          <div class="itemName">Desayuno 1</div>
+          <div class="itemDesc">Café + sandwich</div>
         </div>
-
-        <div class="itemPrice">
-          $1.450
-        </div>
-
+        <div class="itemPrice">$1.450</div>
       </div>
 
       <div class="item">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Empanada Queso
-          </div>
-
-          <div class="itemDesc">
-            Masa artesanal
-          </div>
-
+          <div class="itemName">Empanada Queso</div>
+          <div class="itemDesc">Masa artesanal</div>
         </div>
-
-        <div class="itemPrice">
-          $1.800
-        </div>
-
+        <div class="itemPrice">$1.800</div>
       </div>
 
       <div class="item">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Bebida Lata
-          </div>
-
-          <div class="itemDesc">
-            Coca Cola, Fanta o Sprite
-          </div>
-
+          <div class="itemName">Bebida Lata</div>
+          <div class="itemDesc">Coca Cola, Fanta o Sprite</div>
         </div>
-
-        <div class="itemPrice">
-          $1.200
-        </div>
-
+        <div class="itemPrice">$1.200</div>
       </div>
 
     </div>
@@ -599,103 +544,43 @@ body{
     <div class="menuList">
 
       <div class="item promo">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Promo Completo
-          </div>
-
-          <div class="itemDesc">
-            Completo + bebida lata
-          </div>
-
+          <div class="itemName">Promo Completo</div>
+          <div class="itemDesc">Completo + bebida lata</div>
         </div>
-
-        <div class="itemPrice">
-          $3.500
-        </div>
-
+        <div class="itemPrice">$3.500</div>
       </div>
 
       <div class="item promo">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Promo Almuerzo
-          </div>
-
-          <div class="itemDesc">
-            Fondo + postre + bebida
-          </div>
-
+          <div class="itemName">Promo Almuerzo</div>
+          <div class="itemDesc">Fondo + postre + bebida</div>
         </div>
-
-        <div class="itemPrice">
-          $5.100
-        </div>
-
+        <div class="itemPrice">$5.100</div>
       </div>
 
       <div class="item promo">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Promo Desayuno
-          </div>
-
-          <div class="itemDesc">
-            Café + sandwich + jugo
-          </div>
-
+          <div class="itemName">Promo Desayuno</div>
+          <div class="itemDesc">Café + sandwich + jugo</div>
         </div>
-
-        <div class="itemPrice">
-          $2.300
-        </div>
-
+        <div class="itemPrice">$2.300</div>
       </div>
 
       <div class="item promo">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Combo Familiar
-          </div>
-
-          <div class="itemDesc">
-            2 completos + 2 bebidas
-          </div>
-
+          <div class="itemName">Combo Familiar</div>
+          <div class="itemDesc">2 completos + 2 bebidas</div>
         </div>
-
-        <div class="itemPrice">
-          $6.900
-        </div>
-
+        <div class="itemPrice">$6.900</div>
       </div>
 
       <div class="item promo">
-
         <div class="itemInfo">
-
-          <div class="itemName">
-            Promo Once
-          </div>
-
-          <div class="itemDesc">
-            Té + pastel + sandwich
-          </div>
-
+          <div class="itemName">Promo Once</div>
+          <div class="itemDesc">Té + pastel + sandwich</div>
         </div>
-
-        <div class="itemPrice">
-          $3.200
-        </div>
-
+        <div class="itemPrice">$3.200</div>
       </div>
 
     </div>
