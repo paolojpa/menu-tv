@@ -258,19 +258,19 @@ body{
 .menuList{
   flex:1;
 
-  padding:12px; /* Reducido ligeramente para dar más margen a los ítems */
+  padding:12px;
 
   display:flex;
   flex-direction:column;
 
-  justify-content:flex-start; /* Cambio a flex-start para que los elementos se apilen ordenadamente */
+  justify-content:flex-start;
 
-  gap:10px; /* Menor separación entre tarjetas para optimizar espacio */
+  gap:10px;
 
   overflow:hidden;
 }
 
-/* ITEMS (MÁS COMPACTOS) */
+/* ITEMS */
 
 .item{
   background:
@@ -280,11 +280,11 @@ body{
       #111
     );
 
-  border-radius:16px; /* Bordes un poco más sutiles para tarjetas delgadas */
+  border-radius:16px;
 
-  min-height:65px; /* Reducido drásticamente de 110px para que quepan más */
+  min-height:65px;
 
-  padding:10px 18px; /* Menos relleno superior e inferior */
+  padding:10px 18px;
 
   display:flex;
   align-items:center;
@@ -315,17 +315,16 @@ body{
 .itemName{
   color:#fff;
 
-  font-size:26px; /* Reducido de 34px para mejorar empaquetado en pantalla */
+  font-size:26px;
   font-weight:900;
   line-height:1.1;
 }
 
-/* OCULTA LA DESCRIPCIÓN */
 .itemDesc{
   display: none;
 }
 
-/* PRECIO (MÁS AJUSTADO) */
+/* PRECIO */
 
 .itemPrice{
   flex-shrink:0;
@@ -333,11 +332,11 @@ body{
   background:var(--yellow);
   color:#000;
 
-  padding:8px 14px; /* Reducido el botón del precio */
+  padding:8px 14px;
 
   border-radius:12px;
 
-  font-size:24px; /* Reducido de 30px */
+  font-size:24px;
   font-weight:900;
   line-height:1;
 }
@@ -357,7 +356,26 @@ body{
   background:#fff;
 }
 
-/* RESPONSIVE TV (Ajustado para pantallas estándar o de menores dimensiones) */
+/* CONTENEDOR DE IMÁGENES ROTATIVAS */
+.bottomShowcase {
+  flex: 1; /* Ocupa de manera dinámica todo el espacio vacío inferior */
+  margin: 12px;
+  margin-top: 5px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.05);
+  background: #090909;
+}
+
+.bottomShowcase img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que las fotos llenen el espacio perfectamente sin deformarse */
+  transition: opacity 0.5s ease-in-out; /* Transición suave al cambiar de foto */
+}
+
+/* RESPONSIVE TV */
 
 @media (max-width:1600px){
 
@@ -524,6 +542,10 @@ body{
 
     </div>
 
+    <div class="bottomShowcase">
+      <img id="rotatorCenter" src="/img/comida1.jpg" alt="Platos Disponibles">
+    </div>
+
   </div>
 
   <div class="rightPanel">
@@ -583,6 +605,10 @@ body{
         <div class="itemPrice">$3.200</div>
       </div>
 
+    </div>
+
+    <div class="bottomShowcase">
+      <img id="rotatorRight" src="/img/promo1.jpg" alt="Promos Disponibles">
     </div>
 
   </div>
@@ -667,6 +693,41 @@ setInterval(async () => {
   }
 
 }, 15000);
+
+
+/* =======================================================
+   SISTEMA DE ROTACIÓN DE IMÁGENES INFERIORES
+======================================================= */
+
+// 1. Configura aquí las rutas de tus imágenes para la Columna 2
+const imagesCenter = [
+  "/img/comida1.jpg",
+  "/img/comida2.jpg",
+  "/img/comida3.jpg"
+];
+
+// 2. Configura aquí las rutas de tus imágenes para la Columna 3
+const imagesRight = [
+  "/img/promo1.jpg",
+  "/img/promo2.jpg",
+  "/img/promo3.jpg"
+];
+
+let indexCenter = 0;
+let indexRight = 0;
+
+function rotateBottomImages() {
+  // Rotación Columna 2
+  indexCenter = (indexCenter + 1) % imagesCenter.length;
+  document.getElementById("rotatorCenter").src = imagesCenter[indexCenter];
+
+  // Rotación Columna 3
+  indexRight = (indexRight + 1) % imagesRight.length;
+  document.getElementById("rotatorRight").src = imagesRight[indexRight];
+}
+
+// Ejecuta el cambio automático cada 5000 milisegundos (5 segundos)
+setInterval(rotateBottomImages, 5000);
 
 </script>
 
